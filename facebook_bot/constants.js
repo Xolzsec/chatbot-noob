@@ -10,13 +10,9 @@ const BUTTON_TYPE = {
     WEB_URL : 'web_url',
     POSTBACK : 'postback'
 };
-const Website = {
-	Submit_Post : 'google.com '
-};
 const PAYLOAD = {
-    TECHNICAL_POST: 'TECHNICAL_POST',
-    CAREER_POST: 'CAREER_POST',
-    GENERIC_POST: 'GENERIC_POST',
+   STOP: 'STOP',
+   START: 'START',
     HELP : 'HELP',
     SEE_CATEGORIES: 'SEE_CATEGORIES',
     GIRL : 'GIRL',
@@ -24,4 +20,4 @@ const PAYLOAD = {
 };
 
 
-module.exports = { BOT_REPLY_TYPE, BUTTON_TYPE, PAYLOAD, Website }
+module.exports = { BOT_REPLY_TYPE, BUTTON_TYPE, PAYLOAD }
