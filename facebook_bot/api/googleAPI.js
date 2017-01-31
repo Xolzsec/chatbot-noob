@@ -5,7 +5,7 @@ var _ = require("underscore");
 
 class GoogleAPI {
     constructor() {
-        this._token = process.env.YOUTUBE_TOKEN || atob("QUl6YVN5QzdSMnY4XzlMZVhSbTE1a2lQM2VnNjNaQ0pFLVZadjlr");
+        this._token = process.env.YOUTUBE_TOKEN || atob("QUl6YVN5QVBlSHg5bzVXNEw1TkxoQzIwV1llVFJMN21Pc2lZSGJR");
         this._url = "https://www.googleapis.com/youtube/v3/search";
         
         this._translateUrl = "https://www.googleapis.com/language/translate/v2";
