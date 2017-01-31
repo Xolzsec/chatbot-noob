@@ -1,8 +1,7 @@
 "use strict";
 var SimpleFilter = require("./bot_filter/simpleFilter");
 var SpamFilter = require("./bot_filter/spamFilter");
-var CategoryFilter = require("./bot_filter/categoryFilter");
-var SearchFilter = require("./bot_filter/searchFilter");
+
 var YoutubeFilter = require("./bot_filter/youtubeFilter");
 var ButtonFilter = require("./bot_filter/buttonFilter");
 var EndFilter = require("./bot_filter/endFilter");
@@ -19,38 +18,10 @@ var girlAPI = require("./api/girlAPI");
 var fbAPI = require("./api/facebookAPI");
 var faceRecAPI = require("./api/faceRecAPI");
 var ulti = require("./utilities");
+var isRep = {};
 
-var RepliedThreads ={};
+
 class BotAsync {
-	reply(senderId, textInput) {
-        async(() => {
-            var sender = await (fbAPI.getSenderName(senderId));
-            this.setSender(sender);
-  
-
-            var botReply = await (this.chat(textInput));
-            var output = botReply.output;
-            switch (botReply.type) {
-                case BOT_REPLY_TYPE.TEXT:
-                    fbAPI.sendTextMessage(senderId, output);
-                    break;
-                case BOT_REPLY_TYPE.POST:
-                case BOT_REPLY_TYPE.VIDEOS:
-                    fbAPI.sendTextMessage(senderId, "Có ngay đây. Xem thoải mái ;)");
-                    fbAPI.sendGenericMessage(senderId, ulti.videosToPayloadElements(output));
-                    break;
-                case BOT_REPLY_TYPE.BUTTONS:
-                    let buttons = botReply.buttons;
-                    fbAPI.sendButtonMessage(senderId, output, buttons);
-                    break;
-                case BOT_REPLY_TYPE.IMAGE:
-                    fbAPI.sendTextMessage(senderId, "Đợi tí có liền, đồ dại gái hà ^^");
-                    fbAPI.sendImage(senderId, output);
-                    break;
-                default:
-            }
-        })();
-    }
     constructor() {
 
         
@@ -197,21 +168,30 @@ var crushDucAnFilter = new SimpleFilter(["Crush Duc An la ai", "Crush Đức An 
             "gioi qua", "good job", "hay nhi", "hay ghe", "cam on"
         ], "Không có chi. Rất vui vì đã giúp được cho bạn ^_^");
   
-        var chuiLonFilter = new SimpleFilter(["dm", "dmm", "đậu xanh", "rau má", "dcm", "vkl", "vl", "du me", "may bi dien",
-                "bố láo", "ngu the", "me may", "ccmm", "ccmn", "bot ngu", "đờ mờ", "fuck", "fuck you", "đm", "điên", "ngu thế",
-				"ngu", "đmm", "mẹ mày"
-            ],
+        var chuiLonFilter = new SimpleFilter(["địt mẹ mày", "địt con mẹ mày", "đmm", "vl", "đm"],
             "Bot là người nhân hậu, không chửi thề. Cút ngay không bố đập vỡ cmn ass bây giờ :v!");
         var testFilter = new SimpleFilter(["test"],
             "Đừng test nữa, mấy hôm nay người ta test nhiều quá bot mệt lắm rồi :'(");
+             var stopFilter = new ButtonFilter(["Chat với admin", "Admin đâu", "ad đâu"],
+        "Bấm vào nút nhé <3", [ {
+                title: "Chat với admin",
+                type: BUTTON_TYPE.POSTBACK,
+                payload: PAYLOAD.STOP
+            }]);
+            var startFilter = new ButtonFilter(["Chat với bot", "bot đâu"],
+        "Bấm vào nút nhé <3", [ {
+                title: "Chat với bot",
+                type: BUTTON_TYPE.POSTBACK,
+                payload: PAYLOAD.START
+            }]);
         this._goodbyeFilter = new SimpleFilter(["tạm biệt", "bye", "bai bai", "good bye"], "Tạm biệt, hẹn gặp lại ;)");
 		
 
           this._filters = [new SpamFilter(),
-            new SearchFilter(), new CategoryFilter(), youtubeFilter,
+          youtubeFilter,
             girlFilter, sexyGirlFilter, bikiniGirlFilter, CrushCuocFilter,
             adInfoFilter, botInfoFilter, yeunuocFilter, tienFilter,
-			giubimatFilter, thoaFilter, soloFilter, yeutaokFilter, chuongFilter,
+			giubimatFilter, thoaFilter, soloFilter, yeutaokFilter, chuongFilter, startFilter, stopFilter,
 			taokhongvaoFilter, CrushKhanhFilter, crushHaiFilter, ChatbotDzFilter, crushFilter,
 			crushthanhanFilter, crushDucAnFilter, bosscfsFilter, PNKFilter, NKLFilter, QueFilter, CuocFilter,
             chuiLonFilter, thankyouFilter, helpFilter,
@@ -223,8 +203,7 @@ var crushDucAnFilter = new SimpleFilter(["Crush Duc An la ai", "Crush Đức An 
         this._helloFilter.setOutput(`Chào ${sender.first_name}, mềnh là bot Noob: <3. Bạn cần giúp gì nào <3 ?`);
         this._goodbyeFilter.setOutput(`Tạm biệt ${sender.first_name}, hẹn gặp lại ;)`);
     }
-
-    chat(input) {
+chat(input) {
         for (var filter of this._filters) {
             if (filter.isMatch(input)) {
                 filter.process(input);
@@ -233,7 +212,53 @@ var crushDucAnFilter = new SimpleFilter(["Crush Duc An la ai", "Crush Đức An 
         }
     }
 
-    
+    reply(senderId, textInput) {
+        async(() => {
+            var sender = await (fbAPI.getSenderName(senderId));
+            this.setSender(sender);
+            var botReply = await (this.chat(textInput));
+            var output = botReply.output;
+            switch (botReply.type) {
+                case BOT_REPLY_TYPE.TEXT:
+                   //Wrote by ZeroUnix
+                   
+                   textInput.toLowerCase(); // Non case-sensitive
+                   
+                    if(textInput.indexOf("stop") != -1 || textInput.indexOf("stop") != -1) {
+                        fbAPI.sendTextMessage(senderId,"Ơi! Admin đây <3 Nói gì nào. Để bật lại bot hãy hỏi bot đâu <3")
+                        return isRep[senderId] = true;
+                    }
+                    
+                    if(isRep.hasOwnProperty(senderId)) {
+                        if(textInput.indexOf("start") != -1 || textInput.indexOf("chat bot") != -1) {
+                            delete isRep[senderId];
+                            return fbAPI.sendTextMessage(senderId, "Ok, chat típ nà <3");
+                        }
+                        return;
+                    }
+
+                    if(!isRep.hasOwnProperty(senderId)) {
+                        return fbAPI.sendTextMessage(senderId, output);
+                    }
+                   // fbAPI.sendTextMessage(senderId, output);
+                    break;
+                case BOT_REPLY_TYPE.POST:
+                case BOT_REPLY_TYPE.VIDEOS:
+                    fbAPI.sendTextMessage(senderId, "Có ngay đây. Xem thoải mái ;)");
+                    fbAPI.sendGenericMessage(senderId, ulti.videosToPayloadElements(output));
+                    break;
+                case BOT_REPLY_TYPE.BUTTONS:
+                    let buttons = botReply.buttons;
+                    fbAPI.sendButtonMessage(senderId, output, buttons);
+                    break;
+                case BOT_REPLY_TYPE.IMAGE:
+                    fbAPI.sendTextMessage(senderId, "Đợi tí có liền, đồ dại gái hà ^^");
+                    fbAPI.sendImage(senderId, output);
+                    break;
+                default:
+            }
+        })();
+    }
 
 
     processImage(senderId, imageUrl) {
@@ -250,7 +275,6 @@ var crushDucAnFilter = new SimpleFilter(["Crush Duc An la ai", "Crush Đức An 
             // Send emo back
             fbAPI.sendImage(senderId, imageUrl);
         }
-
     }
 
     processPostback(senderId, payload) {
@@ -258,6 +282,12 @@ var crushDucAnFilter = new SimpleFilter(["Crush Duc An la ai", "Crush Đức An 
             var sender = await (fbAPI.getSenderName(senderId));
             this.setSender(sender);
             switch (payload) {
+                  case PAYLOAD.STOP:
+                    this.reply(senderId, "stop");
+                    break;
+                    case PAYLOAD.START:
+                    this.reply(senderId, "start");
+                    break;
                 case PAYLOAD.SEE_CATEGORIES:
                     this.reply(senderId, "hello");
                     break;
