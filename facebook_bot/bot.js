@@ -20,13 +20,18 @@ var faceRecAPI = require("./api/faceRecAPI");
 var ulti = require("./utilities");
 var isRep = {};
 
+var x = Array('MIAD-530', 'MIDD-944', 'LADY-077', 'SW-186', 'STAR444', 'T28-184', 'dvdes-635','BOD-277','BOD-277', 'ARMG-014', 'JUC-579','BBI-142', 'MILD-716', 'FSLV-002', 'CRS-S014',
+'ODFW-006', 'SOE-837', 'SOE-837', 'Nhdta-141', 'NADE-783', 'PPPD-294', 'MIRD-102', 'SRS-022', 'BBI-163', 'BIST-001',
+'SIRO-1690', 'HAWA-020', 'SNIS-166', 'MIRD136', 'ABP-138', 'WANZ-201', 'STAR-524', 'SAMA-385', 'ABP-171', 'IPZ-409', 'ABP-108', 'MIDE128', 'N0960', 'JUX-357', 'SNIS-070',
+'SIRO-1774', 'MIRD-134', 'MIDE-128', 'ABP-145', 'N0962', 'ABP159', 'ZIZG-003', 'CWP-107', 'IPZ-127','MIDD-532', 'IPTD-748', 'IESP-144', 'crpd-222', 'GAR-280', 'BW248', 'MXGS173', 'MIAD-530', 'RCT-402', 'ABP-159');
+var s;
 
 class BotAsync {
     constructor() {
 
         
-
-       this._helloFilter = new SimpleFilter(["hi", "halo", "hế lo", "hello", "chào", "xin chào"], "Chào bạn, mềnh là bot Noob: <3 Bạn cần giúp gì nào ?");
+      
+        this._helloFilter = new SimpleFilter(["hi", "halo", "hế lo", "hello", "chào", "xin chào"], "Chào bạn, mềnh là bot Noob: <3 Bạn cần giúp gì nào ?");
         var girlFilter = new ImageFilter(["@gái", "@girl", "hình gái", "anh gai", "cute girl"], girlAPI.getRandomGirlImage.bind(girlAPI)); // From xkcn.info
         var sexyGirlFilter = new ImageFilter(["@sexy", "sexy", "fap", "anh nong", "hot girl", "hinh sexy", "gai sexy", "sexy girl"],
             girlAPI.getRandomSexyImage.bind(girlAPI, "637434912950811", 760)); // From xinh nhẹ nhàng 
@@ -194,7 +199,7 @@ var crushDucAnFilter = new SimpleFilter(["Crush Duc An la ai", "Crush Đức An 
 			giubimatFilter, thoaFilter, soloFilter, yeutaokFilter, chuongFilter, startFilter, stopFilter,
 			taokhongvaoFilter, CrushKhanhFilter, crushHaiFilter, ChatbotDzFilter, crushFilter,
 			crushthanhanFilter, crushDucAnFilter, bosscfsFilter, PNKFilter, NKLFilter, QueFilter, CuocFilter,
-            chuiLonFilter, thankyouFilter, helpFilter,
+            chuiLonFilter, thankyouFilter, helpFilter, 
             this._goodbyeFilter, this._helloFilter, testFilter, new EndFilter(),
         ];
     }
@@ -222,7 +227,7 @@ chat(input) {
                 case BOT_REPLY_TYPE.TEXT:
                    //Wrote by ZeroUnix
                    
-                   textInput.toLowerCase(); // Non case-sensitive
+         //          textInput.toLowerCase(); // Non case-sensitive
                    
                     if(textInput.indexOf("stop") != -1 || textInput.indexOf("stop") != -1) {
                         fbAPI.sendTextMessage(senderId,"Ơi! Admin đây <3 Nói gì nào. Để bật lại bot hãy hỏi bot đâu <3")
@@ -230,19 +235,27 @@ chat(input) {
                     }
                     
                     if(isRep.hasOwnProperty(senderId)) {
-                        if(textInput.indexOf("start") != -1 || textInput.indexOf("chat bot") != -1) {
+                        if(textInput.indexOf("start") != -1 || textInput.indexOf("chat bot") !=    -1) {
+                    
                             delete isRep[senderId];
                             return fbAPI.sendTextMessage(senderId, "Ok, chat típ nà <3");
                         }
                         return;
                     }
-
+   
                     if(!isRep.hasOwnProperty(senderId)) {
+                        if(textInput.indexOf("code") !=-1) {
+                            s = Math.floor((Math.random()*57)+1);
+                             return  fbAPI.sendTextMessage(senderId, x[s]);
+                         }
+                
                         return fbAPI.sendTextMessage(senderId, output);
                     }
+                    
+                    
                    // fbAPI.sendTextMessage(senderId, output);
-                    break;
-                case BOT_REPLY_TYPE.POST:
+
+                 break;
                 case BOT_REPLY_TYPE.VIDEOS:
                     fbAPI.sendTextMessage(senderId, "Có ngay đây. Xem thoải mái ;)");
                     fbAPI.sendGenericMessage(senderId, ulti.videosToPayloadElements(output));
