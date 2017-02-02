@@ -317,5 +317,4 @@ chat(input) {
     }
 }
 
-
 module.exports = new BotAsync();
