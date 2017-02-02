@@ -6,7 +6,7 @@ var atob = require("atob");
 class FacebookAPI {
     constructor() {
         this._token = process.env.FB_TOKEN||
-atob("RUFBT1dHdmprNm1JQkFMazdBNW93UTE5aWMyb0hicmdQbjRFMWRDZklOak1wNDVqTllHc3J3elFSQ2NPaUtxR2FCclpBb1BxNEVHcjhITUh3UG5OeFpCUzhiOEV2NjJaQ2dqdFY1SkxIT3hCMDhPcmNBREhJbWhaQzFKdjRvYlF2M0lDc3lldGNVaE1yWkFROVROWkNEb0tQUmFiaW1JNnNoWkFFTXhGWkNpc1lBQVpEWkQ=");
+atob("RUFBT1dHdmprNm1JQkFCNVMyTnRiZXJGejAwRTlqUThkelVKUUNPVkdNclpDQzd6VjFNbDZldXQ3TEdjYVNpTTdHWkNzM1FtSm5VS0RrSVpCODA1Yjd0MTBaQ0Vxa0Q5Mm1yRkw4ZnhFd25oVUJDWkNMWUtQbWxjNjhvR3VQWkJMT1pBcjQ2czgxUHR5NW5PTUgzc09nNnc3bmRrTUJJNVNZcVZwVWptSERGcjFBWkRaRA==");
         this._storedUsers = {};
     }
 

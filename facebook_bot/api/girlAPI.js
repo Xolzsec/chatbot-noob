@@ -9,7 +9,7 @@ class GirlAPI {
         this._tumblrUrl = "https://api.tumblr.com/v2/blog/xkcn.info/posts/photo";
         
         this._fbToken = process.env.FB_TOKEN ||
-        atob("RUFBT1dHdmprNm1JQkFMazdBNW93UTE5aWMyb0hicmdQbjRFMWRDZklOak1wNDVqTllHc3J3elFSQ2NPaUtxR2FCclpBb1BxNEVHcjhITUh3UG5OeFpCUzhiOEV2NjJaQ2dqdFY1SkxIT3hCMDhPcmNBREhJbWhaQzFKdjRvYlF2M0lDc3lldGNVaE1yWkFROVROWkNEb0tQUmFiaW1JNnNoWkFFTXhGWkNpc1lBQVpEWkQ=");
+        atob("RUFBT1dHdmprNm1JQkFCNVMyTnRiZXJGejAwRTlqUThkelVKUUNPVkdNclpDQzd6VjFNbDZldXQ3TEdjYVNpTTdHWkNzM1FtSm5VS0RrSVpCODA1Yjd0MTBaQ0Vxa0Q5Mm1yRkw4ZnhFd25oVUJDWkNMWUtQbWxjNjhvR3VQWkJMT1pBcjQ2czgxUHR5NW5PTUgzc09nNnc3bmRrTUJJNVNZcVZwVWptSERGcjFBWkRaRA==");
         this._pageId = "637434912950811"; // Xinh nhe nhang page
         this._fbUrl = `https://graph.facebook.com/v2.6/${this._pageId}/photos/`;
     }
