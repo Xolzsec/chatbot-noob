@@ -27,9 +27,16 @@ function SendWeatherMessage(text, callback){
     });
 }
 
-function sendMultiTextMessages (senderId, data, callback) {
+function sendMultiTextMessages (senderId, data) {
     if (data.length) {
-        fbAPI.sendTextMessage(senderId, data[0], callback);
+        fbAPI.sendTextMessage(senderId, data[0], this.onSendMultiTextMessages.bind(senderId, data, err));
+    }
+}
+
+function onSendMultiTextMessages (senderId, data, err) {
+    if (!err) {
+        data.splice(0, 1);
+        sendMultiTextMessages(senderId, data);
     }
 }
 
@@ -273,11 +280,12 @@ chat(input) {
                                     console.log('weather api err:', err);
                                     return;
                                 }
-                                var arr_mess = res.messages;
+                                var arr_mess = [];
+                                for(var i=0; i<res.messages.length; i++) {
+                                    arr_mess.push(res.messages[i].text);
+                                }
                                 console.log('arr mess:', arr_mess);
-                                arr_mess.forEach(function(element) {
-                                    fbAPI.sendTextMessage(senderId, element.text);
-                                }, this);
+                                sendMultiTextMessages(senderId, arr_mess)
                                 return;
                             });                            
                         }
