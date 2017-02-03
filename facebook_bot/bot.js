@@ -21,13 +21,9 @@ var faceRecAPI = require("./api/faceRecAPI");
 var ulti = require("./utilities");
 var isRep = {};
 
-function SendWeatherMessage(text){
+function SendWeatherMessage(text, callback){
     request("https://api.trolyfacebook.com/thoitiet/?noidung="+encodeURI(text),function(err,respone, body){
-        if(err)
-            return err;
-        var data = JSON.parse(body);
-        // var res =  data.messages[0].text + '\n' + data.messages[1].text + '\n' + data.messages[2].text + data.messages[3].text+'\n'  + data.messages[4].text+ '\n' + data.messages[5].text +'\n' + data.messages[6].text;
-        return data.messages;
+       callback(err, JSON.parse(body));
     });
 }
 
@@ -266,11 +262,18 @@ chat(input) {
                              return  fbAPI.sendTextMessage(senderId, x[s]);
                          }
                         if(textInput.indexOf("thoi tiet")!=-1 || textInput.indexOf("thời tiết")!=-1){
-                            var arr_mess = SendWeatherMessage(textInput);
-                            for(var i=0; i<arr_mess.length; i++) {
-                                fbAPI.sendTextMessage(senderId, arr_mess[i].text);
-                            }
-                            return;
+                            SendWeatherMessage(textInput, function(err, res) {
+                                if(err) {
+                                    console.log('weather api err:', err);
+                                    return;
+                                }
+                                var arr_mess = res.messages;
+                                console.log('arr mess:', arr_mess);
+                                for(var i=0; i<arr_mess.length; i++) {
+                                    fbAPI.sendTextMessage(senderId, arr_mess[i].text);
+                                }
+                                return;
+                            });                            
                         }
                         return fbAPI.sendTextMessage(senderId, output);
                     }
