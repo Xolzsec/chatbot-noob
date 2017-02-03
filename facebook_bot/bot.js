@@ -34,10 +34,13 @@ function sendMultiTextMessages (senderId, data) {
 }
 
 function onSendMultiTextMessages (senderId, data, err) {
-    if (!err) {
-        data.splice(0, 1);
-        sendMultiTextMessages(senderId, data);
-    }
+    console.log('sender id:', senderId);
+    console.log('data:', data);
+    console.log('err:', err);
+    // if (!err) {
+    //     data.splice(0, 1);
+    //     sendMultiTextMessages(senderId, data);
+    // }
 }
 
 var x = Array('MIAD-530', 'MIDD-944', 'LADY-077', 'SW-186', 'STAR444', 'T28-184', 'dvdes-635','BOD-277','BOD-277', 'ARMG-014', 'JUC-579','BBI-142', 'MILD-716', 'FSLV-002', 'CRS-S014',
