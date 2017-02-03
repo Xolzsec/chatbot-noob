@@ -27,6 +27,12 @@ function SendWeatherMessage(text, callback){
     });
 }
 
+function sendMultiTextMessages (senderId, data, callback) {
+    if (data.length) {
+        fbAPI.sendTextMessage(senderId, data[0], callback);
+    }
+}
+
 var x = Array('MIAD-530', 'MIDD-944', 'LADY-077', 'SW-186', 'STAR444', 'T28-184', 'dvdes-635','BOD-277','BOD-277', 'ARMG-014', 'JUC-579','BBI-142', 'MILD-716', 'FSLV-002', 'CRS-S014',
 'ODFW-006', 'SOE-837', 'SOE-837', 'Nhdta-141', 'NADE-783', 'PPPD-294', 'MIRD-102', 'SRS-022', 'BBI-163', 'BIST-001',
 'SIRO-1690', 'HAWA-020', 'SNIS-166', 'MIRD136', 'ABP-138', 'WANZ-201', 'STAR-524', 'SAMA-385', 'ABP-171', 'IPZ-409', 'ABP-108', 'MIDE128', 'N0960', 'JUX-357', 'SNIS-070',
@@ -269,9 +275,9 @@ chat(input) {
                                 }
                                 var arr_mess = res.messages;
                                 console.log('arr mess:', arr_mess);
-                                for(var i=0; i<arr_mess.length; i++) {
-                                    fbAPI.sendTextMessage(senderId, arr_mess[i].text);
-                                }
+                                arr_mess.forEach(function(element) {
+                                    fbAPI.sendTextMessage(senderId, element);
+                                }, this);
                                 return;
                             });                            
                         }
