@@ -38,7 +38,9 @@ function onSendMultiTextMessages (senderId, data) {
     console.log('data:', data);
     // if (!err) {
         data.splice(0, 1);
-        sendMultiTextMessages(senderId, data);
+        setTimeout(function () {
+            sendMultiTextMessages(senderId, data);
+        }, 1000);
     // }
 }
 
