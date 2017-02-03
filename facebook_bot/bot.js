@@ -276,7 +276,7 @@ chat(input) {
                                 var arr_mess = res.messages;
                                 console.log('arr mess:', arr_mess);
                                 arr_mess.forEach(function(element) {
-                                    fbAPI.sendTextMessage(senderId, element);
+                                    fbAPI.sendTextMessage(senderId, element.text);
                                 }, this);
                                 return;
                             });                            
