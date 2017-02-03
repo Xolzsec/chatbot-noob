@@ -1,6 +1,8 @@
 "use strict";
 var SimpleFilter = require("./bot_filter/simpleFilter");
 var SpamFilter = require("./bot_filter/spamFilter");
+var request = require("request");
+
 var YoutubeFilter = require("./bot_filter/youtubeFilter");
 var ButtonFilter = require("./bot_filter/buttonFilter");
 var EndFilter = require("./bot_filter/endFilter");
@@ -8,18 +10,27 @@ var ImageFilter = require("./bot_filter/imageFilter");
 
 var async = require("asyncawait/async");
 var await = require("asyncawait/await");
-
+var thoitietAPI = require("./api/thoitietAPI");
 var BOT_REPLY_TYPE = require("./constants").BOT_REPLY_TYPE;
 var BUTTON_TYPE = require("./constants").BUTTON_TYPE;
 var PAYLOAD = require("./constants").PAYLOAD;
-
 var javAPI = require("./api/javAPI");
 var girlAPI = require("./api/girlAPI");
 var fbAPI = require("./api/facebookAPI");
 var faceRecAPI = require("./api/faceRecAPI");
 var ulti = require("./utilities");
-
 var isRep = {};
+
+function SendWeatherMessage(text){
+    request("https://api.trolyfacebook.com/thoitiet/?noidung="+encodeURI(text),function(err,respone, body){
+        if(err)
+            return err;
+        var data = JSON.parse(body);
+        var res =  data.messages[0].text + '\n' + data.messages[1].text + '\n' + data.messages[2].text + data.messages[3].text+'\n'  + data.messages[4].text+ '\n' + data.messages[5].text +'\n' + data.messages[6].text;
+        return res;
+    });
+}
+
 var x = Array('MIAD-530', 'MIDD-944', 'LADY-077', 'SW-186', 'STAR444', 'T28-184', 'dvdes-635','BOD-277','BOD-277', 'ARMG-014', 'JUC-579','BBI-142', 'MILD-716', 'FSLV-002', 'CRS-S014',
 'ODFW-006', 'SOE-837', 'SOE-837', 'Nhdta-141', 'NADE-783', 'PPPD-294', 'MIRD-102', 'SRS-022', 'BBI-163', 'BIST-001',
 'SIRO-1690', 'HAWA-020', 'SNIS-166', 'MIRD136', 'ABP-138', 'WANZ-201', 'STAR-524', 'SAMA-385', 'ABP-171', 'IPZ-409', 'ABP-108', 'MIDE128', 'N0960', 'JUX-357', 'SNIS-070',
@@ -68,11 +79,11 @@ class BotAsync {
         var girlFilter = new ImageFilter(["@gái", "@girl", "hình gái", "anh gai", "cute girl"], girlAPI.getRandomGirlImage.bind(girlAPI)); // From xkcn.info
         var sexyGirlFilter = new ImageFilter(["@sexy", "sexy", "fap", "anh nong", "hot girl", "hinh sexy", "gai sexy", "sexy girl"],
             girlAPI.getRandomSexyImage.bind(girlAPI, "637434912950811", 760)); // From xinh nhẹ nhàng 
-        
+        var thoitietFilter = new SimpleFilter(["thời tiết"], thoitietAPI.getthoitiet.bind(thoitietAPI));
         var bikiniGirlFilter = new ImageFilter(["@bikini", "bikini", "ao tam", "do boi"],
             girlAPI.getRandomSexyImage.bind(girlAPI, "169971983104176", 1070)); // From hội bikini
             var javFilter = new ImageFilter(["H081576"], javAPI.getRandomJAVImage.bind(javAPI));
-
+var th
         var youtubeFilter = new YoutubeFilter(["@nhạc", "@music", "@youtube", "@yt"]);
 
         var helpFilter = new ButtonFilter(["help", "giúp đỡ", "giúp với", "giúp mình", "giúp", "hướng dẫn"],
@@ -205,7 +216,7 @@ var CuocFilter = new SimpleFilter (["Cuốc là ai"
             girlFilter, sexyGirlFilter, bikiniGirlFilter, CrushCuocFilter, javFilter, jav,
 			giubimatFilter, thoaFilter, soloFilter, yeutaokFilter, chuongFilter, startFilter, stopFilter,
 			taokhongvaoFilter, CrushKhanhFilter, crushHaiFilter, ChatbotDzFilter, crushFilter, bosscfsFilter, PNKFilter, CuocFilter,
-            chuiLonFilter, thankyouFilter, helpFilter, 
+            chuiLonFilter, thankyouFilter, helpFilter, thoitietFilter,
             this._goodbyeFilter, this._helloFilter, testFilter, new EndFilter(),
         ];
     }
@@ -250,11 +261,15 @@ chat(input) {
                     }
    
                     if(!isRep.hasOwnProperty(senderId)) {
-                        if(textInput.indexOf("code") !=-1 || textInput.indexOf("Code") !=1) {
-                         s = Math.floor((Math.random()*x.length)+1);
+                        if(textInput.indexOf("code") !=-1 || textInput.indexOf("Code") !=-1) {
+                            s = Math.floor((Math.random()*x.length)+1);
                              return  fbAPI.sendTextMessage(senderId, x[s]);
                          }
-                
+                        if(textInput.indexOf("thoi tiet")!=-1 || textInput.indexOf("thời tiết")!=-1){
+                            var m = SendWeatherMessage(textInput);
+                            fbAPI.sendTextMessage(senderId, m);
+                            return;
+                        }
                         return fbAPI.sendTextMessage(senderId, output);
                     }
                     
