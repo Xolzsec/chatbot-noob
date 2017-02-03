@@ -29,7 +29,7 @@ function SendWeatherMessage(text, callback){
 
 function sendMultiTextMessages (senderId, data) {
     if (data.length) {
-        fbAPI.sendTextMessage(senderId, data[0], onSendMultiTextMessages.bind(senderId, data, err));
+        fbAPI.sendTextMessage(senderId, data[0], onSendMultiTextMessages.bind(senderId, data));
     }
 }
 
