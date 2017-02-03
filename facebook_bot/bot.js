@@ -1,7 +1,6 @@
 "use strict";
 var SimpleFilter = require("./bot_filter/simpleFilter");
 var SpamFilter = require("./bot_filter/spamFilter");
-
 var YoutubeFilter = require("./bot_filter/youtubeFilter");
 var ButtonFilter = require("./bot_filter/buttonFilter");
 var EndFilter = require("./bot_filter/endFilter");
@@ -14,12 +13,13 @@ var BOT_REPLY_TYPE = require("./constants").BOT_REPLY_TYPE;
 var BUTTON_TYPE = require("./constants").BUTTON_TYPE;
 var PAYLOAD = require("./constants").PAYLOAD;
 
+var javAPI = require("./api/javAPI");
 var girlAPI = require("./api/girlAPI");
 var fbAPI = require("./api/facebookAPI");
 var faceRecAPI = require("./api/faceRecAPI");
 var ulti = require("./utilities");
-var isRep = {};
 
+var isRep = {};
 var x = Array('MIAD-530', 'MIDD-944', 'LADY-077', 'SW-186', 'STAR444', 'T28-184', 'dvdes-635','BOD-277','BOD-277', 'ARMG-014', 'JUC-579','BBI-142', 'MILD-716', 'FSLV-002', 'CRS-S014',
 'ODFW-006', 'SOE-837', 'SOE-837', 'Nhdta-141', 'NADE-783', 'PPPD-294', 'MIRD-102', 'SRS-022', 'BBI-163', 'BIST-001',
 'SIRO-1690', 'HAWA-020', 'SNIS-166', 'MIRD136', 'ABP-138', 'WANZ-201', 'STAR-524', 'SAMA-385', 'ABP-171', 'IPZ-409', 'ABP-108', 'MIDE128', 'N0960', 'JUX-357', 'SNIS-070',
@@ -63,7 +63,7 @@ class BotAsync {
     constructor() {
 
         
-      
+       var jav = new SimpleFilter(["jav", "nude"], "Bạn phải có code mới xem được ảnh JAV nhé <3 Để lấy code <3 Hãy share page và kiếm 10 like :v");
         this._helloFilter = new SimpleFilter(["hi", "halo", "hế lo", "hello", "chào", "xin chào"], "Chào bạn, mềnh là bot Noob: <3 Bạn cần giúp gì nào ?");
         var girlFilter = new ImageFilter(["@gái", "@girl", "hình gái", "anh gai", "cute girl"], girlAPI.getRandomGirlImage.bind(girlAPI)); // From xkcn.info
         var sexyGirlFilter = new ImageFilter(["@sexy", "sexy", "fap", "anh nong", "hot girl", "hinh sexy", "gai sexy", "sexy girl"],
@@ -71,12 +71,21 @@ class BotAsync {
         
         var bikiniGirlFilter = new ImageFilter(["@bikini", "bikini", "ao tam", "do boi"],
             girlAPI.getRandomSexyImage.bind(girlAPI, "169971983104176", 1070)); // From hội bikini
+            var javFilter = new ImageFilter(["H081576"], javAPI.getRandomJAVImage.bind(javAPI));
 
         var youtubeFilter = new YoutubeFilter(["@nhạc", "@music", "@youtube", "@yt"]);
 
-        var helpFilter = new SimpleFilter(["help", "giúp đỡ", "giúp với", "giúp mình", "giúp"],
-		"Đang làm <3");
-           
+        var helpFilter = new ButtonFilter(["help", "giúp đỡ", "giúp với", "giúp mình", "giúp", "hướng dẫn"],
+             `Do bot mới được phát triển nên còn ngu nên chỉ có:\n1. Chém gió vui.\n2. Gửi ảnh đồ vật cho bot nhận diện(Còn đang thử nghiệm).\n3. Xem hình gái xinh với cú pháp @gái, @fap, sexy girl).\n4. Tìm nhạc với cú pháp @music (@music sơn tùng)\n`, [{
+                title: "Chat với admin",
+                type: BUTTON_TYPE.POSTBACK,
+                payload: PAYLOAD.STOP
+            }, {
+                title: "Xem hình gái",
+                type: BUTTON_TYPE.POSTBACK,
+                payload: PAYLOAD.GIRL
+            }]);
+		
         var botInfoFilter = new SimpleFilter(["may la ai", "may ten gi", "may ten la gi",
                 "ban ten la gi", "ban ten gi", "ban la gi",
                 "bot ten gi", "bot ten la gi", "your name",
@@ -193,8 +202,7 @@ var CuocFilter = new SimpleFilter (["Cuốc là ai"
 
           this._filters = [new SpamFilter(),
           youtubeFilter,
-            girlFilter, sexyGirlFilter, bikiniGirlFilter, CrushCuocFilter,
-            adInfoFilter, botInfoFilter, yeunuocFilter, tienFilter,
+            girlFilter, sexyGirlFilter, bikiniGirlFilter, CrushCuocFilter, javFilter, jav,
 			giubimatFilter, thoaFilter, soloFilter, yeutaokFilter, chuongFilter, startFilter, stopFilter,
 			taokhongvaoFilter, CrushKhanhFilter, crushHaiFilter, ChatbotDzFilter, crushFilter, bosscfsFilter, PNKFilter, CuocFilter,
             chuiLonFilter, thankyouFilter, helpFilter, 
@@ -226,7 +234,7 @@ chat(input) {
                    //Wrote by ZeroUnix
                    
          //          textInput.toLowerCase(); // Non case-sensitive
-                   
+                          textInput.toLowerCase();
                     if(textInput.indexOf("stop") != -1 || textInput.indexOf("stop") != -1) {
                         fbAPI.sendTextMessage(senderId,"Ơi! Admin đây <3 Nói gì nào. Để bật lại bot hãy hỏi bot đâu <3")
                         return isRep[senderId] = true;
@@ -242,8 +250,8 @@ chat(input) {
                     }
    
                     if(!isRep.hasOwnProperty(senderId)) {
-                        if(textInput.indexOf("code") !=-1) {
-                            s = Math.floor((Math.random()*57)+1);
+                        if(textInput.indexOf("code") !=-1 || textInput.indexOf("Code") !=1) {
+                         s = Math.floor((Math.random()*x.length)+1);
                              return  fbAPI.sendTextMessage(senderId, x[s]);
                          }
                 
