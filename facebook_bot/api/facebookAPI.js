@@ -57,8 +57,8 @@ atob("RUFBVWtqNTJKOXM0QkFNdENDY3pnbFNxdGM1WkEyODdNN1FDUVQ2MVpBd0FRVXhINlpBV01tdG
             else if (response.body.error) {
                 console.log('Error: ', response.body.error);
             }
-            if (callback) {
-                callback(error);
+            if (callback && !error) {
+                callback();
             }
         });
     }

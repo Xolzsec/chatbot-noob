@@ -29,15 +29,14 @@ function SendWeatherMessage(text, callback){
 
 function sendMultiTextMessages (senderId, data) {
     if (data.length) {
-        fbAPI.sendTextMessage(senderId, data[0], onSendMultiTextMessages.bind(senderId, data));
+        fbAPI.sendTextMessage(senderId, data[0], onSendMultiTextMessages(senderId, data));
     }
 }
 
-function onSendMultiTextMessages (senderId, data, err) {
+function onSendMultiTextMessages (senderId, data) {
     console.log('sender id:', senderId);
     console.log('data:', data);
-    console.log('err:', err);
-    // if (!err) {
+x    // if (!err) {
     //     data.splice(0, 1);
     //     sendMultiTextMessages(senderId, data);
     // }
