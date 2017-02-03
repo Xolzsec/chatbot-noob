@@ -37,8 +37,8 @@ function onSendMultiTextMessages (senderId, data) {
     console.log('sender id:', senderId);
     console.log('data:', data);
 x    // if (!err) {
-    //     data.splice(0, 1);
-    //     sendMultiTextMessages(senderId, data);
+        data.splice(0, 1);
+        sendMultiTextMessages(senderId, data);
     // }
 }
 
