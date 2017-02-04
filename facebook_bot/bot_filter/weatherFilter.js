@@ -11,13 +11,8 @@ class WeatherFilter extends SimpleFilter {
         this._weatherFunction = weatherFunction;
     }
 
-    // process(input) {
-    //     this._query = encodeURI(input);
-    // }
-
     reply(input) {
         return this._weatherFunction().then(data => {
-            console.log('typeof data weatherFilter.js:', typeof data);
             return {
                 output: data,
                 type: BOT_REPLY_TYPE.TEXT
