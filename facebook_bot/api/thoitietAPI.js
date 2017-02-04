@@ -22,6 +22,7 @@ class ThoiTietAPI {
                 for (var i=0; i<res.messages.length; i++) {
                     data.push(res.messages[i].text);
                 }
+                console.log('typeof data thoitietapi.js:', typeof data);
                 resolve(data);            
             });
         });

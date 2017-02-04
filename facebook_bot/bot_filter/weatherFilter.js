@@ -12,6 +12,7 @@ class WeatherFilter extends SimpleFilter {
 
     reply(input) {
         return api.getthoitiet(this._query).then(data => {
+            console.log('typeof data weatherFilter.js:', typeof data);
             return {
                 output: data,
                 type: BOT_REPLY_TYPE.TEXT
