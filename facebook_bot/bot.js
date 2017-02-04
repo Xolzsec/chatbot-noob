@@ -96,7 +96,7 @@ class BotAsync {
         var youtubeFilter = new YoutubeFilter(["@nhạc", "@music", "@youtube", "@yt"]);
 
         var helpFilter = new ButtonFilter(["help", "giúp đỡ", "giúp với", "giúp mình", "giúp", "hướng dẫn"],
-             `Do bot mới được phát triển nên còn ngu nên chỉ có:\n1. Chém gió vui.\n2. Gửi ảnh đồ vật cho bot nhận diện(Còn đang thử nghiệm).\n3. Xem hình gái xinh với cú pháp @gái, @fap, sexy girl).\n4. Tìm nhạc với cú pháp @music (@music sơn tùng)\n`, [{
+             `Do bot mới được phát triển nên còn ngu nên chỉ có:\n1. Xem thời tiết theo tỉnh thành (thoi tiet tay ninh || thời tiết lâm đồng).\n2. Xem hình gái xinh với cú pháp @gái, @bikini, sexy girl).\n3. Tìm nhạc với cú pháp @music (@music sơn tùng)\n`, [{
                 title: "Chat với admin",
                 type: BUTTON_TYPE.POSTBACK,
                 payload: PAYLOAD.STOP
