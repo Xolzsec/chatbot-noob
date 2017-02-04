@@ -168,7 +168,7 @@ var ChatbotDzFilter = new SimpleFilter (["Chatbot dep trai", "Chatbot đẹp tra
             bikiniGirlFilter, javFilter, jav, yeunuocFilter, giubimatFilter, tienFilter, 
             soloFilter, yeutaokFilter, startFilter, stopFilter,	ChatbotDzFilter, 
             chuiLonFilter, thankyouFilter, helpFilter, thoitietFilter,
-            this._goodbyeFilter, this._helloFilter, testFilter, new EndFilter(),
+            this._goodbyeFilter, this._helloFilter, testFilter
         ];
     }
 
@@ -183,6 +183,7 @@ chat(input) {
                 return filter.reply(input);
             }
         }
+        return new EndFilter().reply(input);
     }
 
     reply(senderId, textInput) {
