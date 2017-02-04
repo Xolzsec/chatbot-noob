@@ -1,7 +1,7 @@
 "use strict"
 var request = require("request");
 class ThoiTietAPI {
-	contructor() {
+	constructor() {
 		this._url = "https://api.trolyfacebook.com/thoitiet/?noidung=";
 	}
     getthoitiet(query) {
