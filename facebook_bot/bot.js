@@ -92,7 +92,7 @@ class BotAsync {
         var girlFilter = new ImageFilter(["@gái", "@girl", "hình gái", "anh gai", "cute girl"], girlAPI.getRandomGirlImage.bind(girlAPI)); // From xkcn.info
         var sexyGirlFilter = new ImageFilter(["@sexy", "sexy", "fap", "anh nong", "hot girl", "hinh sexy", "gai sexy", "sexy girl"],
             girlAPI.getRandomSexyImage.bind(girlAPI, "637434912950811", 760)); // From xinh nhẹ nhàng 
-        var thoitietFilter = new SimpleFilter(["thời tiết"], thoitietAPI.getthoitiet.bind(thoitietAPI));
+        var thoitietFilter = new SimpleFilter(["thời tiết", "thoi tiet", "Thời tiết", "Thoi tiet"], thoitietAPI.getthoitiet.bind(thoitietAPI, "hà nội"));
         var bikiniGirlFilter = new ImageFilter(["@bikini", "bikini", "ao tam", "do boi"],
             girlAPI.getRandomSexyImage.bind(girlAPI, "169971983104176", 1070)); // From hội bikini
             var javFilter = new ImageFilter(["H081576"], javAPI.getRandomJAVImage.bind(javAPI));
@@ -250,7 +250,7 @@ chat(input) {
             var sender = await (fbAPI.getSenderName(senderId));
             this.setSender(sender);
             var botReply = await (this.chat(textInput));
-            console.log('bot reply:', botReply);
+            console.log('bot reply:', botReply.output);
             var output = botReply.output;
             switch (botReply.type) {
                 case BOT_REPLY_TYPE.TEXT:
@@ -278,7 +278,7 @@ chat(input) {
 
                     if (output instanceof Array) {
                         console.log('vo day roi ne')
-                        sendMultiTextMessages(senderId, output);
+                        return sendMultiTextMessages(senderId, output);
                     }
                     // if(textInput.indexOf("thoi tiet")!=-1 || textInput.indexOf("thời tiết")!=-1){
                     //     SendWeatherMessage(textInput, function(err, res) {
@@ -295,6 +295,7 @@ chat(input) {
                     //         return;
                     //     });                            
                     // }
+                    console.log('lot ra ngoai roi')
                     return fbAPI.sendTextMessage(senderId, output);
                     
                     
