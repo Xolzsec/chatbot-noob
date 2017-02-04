@@ -25,7 +25,6 @@ class SimsimiAPI {
                 }
                 
                 var rs = JSON.parse(body);
-                console.log(rs);
                 resolve(rs.messages[0].text);
             });
         });

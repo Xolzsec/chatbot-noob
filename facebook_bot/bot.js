@@ -192,8 +192,8 @@ chat(input) {
             this.setSender(sender);
             var botReply = await (this.chat(textInput));
             var output = botReply.output;
-            console.log('output:', output);
-            console.log(typeof output);
+            // console.log('output:', output);
+            // console.log(typeof output);
             switch (botReply.type) {
                 case BOT_REPLY_TYPE.TEXT:
                    //Wrote by ZeroUnix
