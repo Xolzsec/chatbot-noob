@@ -6,12 +6,17 @@ var BOT_REPLY_TYPE = require("./../constants").BOT_REPLY_TYPE;
 
 // Same as simple filter, but return text and buttons
 class WeatherFilter extends SimpleFilter {
-    process(input) {
-        this._query = encodeURI(input);
+    constructor(inputText, weatherFunction) {
+        super(inputText, "");
+        this._weatherFunction = weatherFunction;
     }
 
+    // process(input) {
+    //     this._query = encodeURI(input);
+    // }
+
     reply(input) {
-        return api.getthoitiet(this._query).then(data => {
+        return this._weatherFunction().then(data => {
             console.log('typeof data weatherFilter.js:', typeof data);
             return {
                 output: data,

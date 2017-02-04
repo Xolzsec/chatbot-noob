@@ -7,7 +7,7 @@ class ThoiTietAPI {
     getthoitiet(query) {
         return new Promise((resolve, reject) => {
             request({
-                url: this._url + query,               
+                url: this._url + encodeURI(query),               
                 method: "GET"
             }, (err, response, body) => {
                 if (err) {          
