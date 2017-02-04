@@ -12,7 +12,7 @@ class WeatherFilter extends SimpleFilter {
     }
 
     reply(input) {
-        return this._weatherFunction().then(data => {
+        return this._weatherFunction(input).then(data => {
             return {
                 output: data,
                 type: BOT_REPLY_TYPE.TEXT

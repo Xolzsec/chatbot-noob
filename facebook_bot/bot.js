@@ -89,7 +89,7 @@ class BotAsync {
         var girlFilter = new ImageFilter(["@gái", "@girl", "hình gái", "anh gai", "cute girl"], girlAPI.getRandomGirlImage.bind(girlAPI)); // From xkcn.info
         var sexyGirlFilter = new ImageFilter(["@sexy", "sexy", "fap", "anh nong", "hot girl", "hinh sexy", "gai sexy", "sexy girl"],
             girlAPI.getRandomSexyImage.bind(girlAPI, "637434912950811", 760)); // From xinh nhẹ nhàng 
-        var thoitietFilter = new WeatherFilter(["thời tiết", "thoi tiet", "Thời tiết", "Thoi tiet"], thoitietAPI.getthoitiet.bind(thoitietAPI, "hà nội"));
+        var thoitietFilter = new WeatherFilter(["thời tiết", "thoi tiet", "Thời tiết", "Thoi tiet"], thoitietAPI.getthoitiet.bind(thoitietAPI));
         var bikiniGirlFilter = new ImageFilter(["@bikini", "bikini", "ao tam", "do boi"],
             girlAPI.getRandomSexyImage.bind(girlAPI, "169971983104176", 1070)); // From hội bikini
             var javFilter = new ImageFilter(["H081576"], javAPI.getRandomJAVImage.bind(javAPI));
