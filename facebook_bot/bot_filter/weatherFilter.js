@@ -7,11 +7,11 @@ var BOT_REPLY_TYPE = require("./../constants").BOT_REPLY_TYPE;
 // Same as simple filter, but return text and buttons
 class WeatherFilter extends SimpleFilter {
     process(input) {
-        
+        this._query = encodeURI(input);
     }
 
     reply(input) {
-        return api.getthoitiet().then((videos) => {
+        return api.getthoitiet(this._query).then((videos) => {
             return {
                 output: videos,
                 type: BOT_REPLY_TYPE.VIDEOS
