@@ -16,7 +16,7 @@ class SimsimiAPI {
         
         return new Promise((resolve, reject) => {
             request({
-                url: 'https://api.trolyfacebook.com/chat/?noidung='+encodeURI(text)+'&tenbot=TcSDbQ==&loctuxau=0' ,
+                url: 'https://api.trolyfacebook.com/chat/?noidung='+encodeURI(text)+'&tenbot=TcSDbQ==&loctuxau=1' ,
                 method: "GET"
             }, (err, response, body) => {
                 if (err) {
