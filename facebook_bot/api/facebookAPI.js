@@ -36,7 +36,7 @@ atob("RUFBVWtqNTJKOXM0QkFNdENDY3pnbFNxdGM1WkEyODdNN1FDUVQ2MVpBd0FRVXhINlpBV01tdG
 
     sendTextMessage(senderId, text, callback) {
         var messageData = {
-            text: 'BOT: ' + text
+            text: 'Măm: ' + text
         };
         request({
             url: 'https://graph.facebook.com/v2.6/me/messages',
