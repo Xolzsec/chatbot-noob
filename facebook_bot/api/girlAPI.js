@@ -62,8 +62,14 @@ class GirlAPI {
                 }
                 
                 var rs = JSON.parse(body);
-                var imageUrl = rs.data[0].images[0].source; 
-                resolve(imageUrl);
+                if(rs.data) {
+                    var imageUrl = rs.data[0].images[0].source; 
+                    resolve(imageUrl);
+                    return;
+                }
+
+                reject("");
+                return;
             });
         });
     }
