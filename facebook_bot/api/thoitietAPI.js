@@ -4,14 +4,15 @@ class ThoiTietAPI {
 	contructor() {
 		this._url = "https://api.trolyfacebook.com/thoitiet/?noidung=";
 	}
-	  getthoitiet(query) {
+    getthoitiet(query) {
         return new Promise((resolve, reject) => {
             request({
                 url: this._url + query,               
                 method: "GET"
             }, (err, response, body) => {
-                if (err) {                                
-                    reject();
+                if (err) {          
+                    console.log('err on get weather:', err);                      
+                    reject(err);
                     return;
                 }
                 
