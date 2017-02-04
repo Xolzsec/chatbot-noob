@@ -11,7 +11,7 @@ class WeatherFilter extends SimpleFilter {
     }
 
     reply(input) {
-        return api.getthoitiet(this._query).then((data) => {
+        return api.getthoitiet(this._query).then(data => {
             return {
                 output: data,
                 type: BOT_REPLY_TYPE.TEXT
