@@ -250,8 +250,9 @@ chat(input) {
             var sender = await (fbAPI.getSenderName(senderId));
             this.setSender(sender);
             var botReply = await (this.chat(textInput));
-            console.log('bot reply:', botReply.output);
             var output = botReply.output;
+            console.log('output:', output);
+            console.log(typeof output);
             switch (botReply.type) {
                 case BOT_REPLY_TYPE.TEXT:
                    //Wrote by ZeroUnix
