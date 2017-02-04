@@ -96,7 +96,6 @@ class BotAsync {
         var bikiniGirlFilter = new ImageFilter(["@bikini", "bikini", "ao tam", "do boi"],
             girlAPI.getRandomSexyImage.bind(girlAPI, "169971983104176", 1070)); // From hội bikini
             var javFilter = new ImageFilter(["H081576"], javAPI.getRandomJAVImage.bind(javAPI));
-var th
         var youtubeFilter = new YoutubeFilter(["@nhạc", "@music", "@youtube", "@yt"]);
 
         var helpFilter = new ButtonFilter(["help", "giúp đỡ", "giúp với", "giúp mình", "giúp", "hướng dẫn"],
@@ -257,7 +256,7 @@ chat(input) {
                    //Wrote by ZeroUnix
                    
          //          textInput.toLowerCase(); // Non case-sensitive
-                          textInput.toLowerCase();
+                    textInput.toLowerCase();
                     if(textInput.indexOf("stop") != -1 || textInput.indexOf("stop") != -1) {
                         fbAPI.sendTextMessage(senderId,"Ơi! Admin đây <3 Nói gì nào. Để bật lại bot hãy hỏi bot đâu <3")
                         return isRep[senderId] = true;
@@ -265,35 +264,37 @@ chat(input) {
                     
                     if(isRep.hasOwnProperty(senderId)) {
                         if(textInput.indexOf("start") != -1 || textInput.indexOf("chat bot") !=    -1) {
-                    
                             delete isRep[senderId];
                             return fbAPI.sendTextMessage(senderId, "Ok, chat típ nà <3");
                         }
                         return;
                     }
    
-                    if(!isRep.hasOwnProperty(senderId)) {
-                        if(textInput.indexOf("code") !=-1 || textInput.indexOf("Code") !=-1) {
-                            s = Math.floor((Math.random()*x.length)+1);
-                             return  fbAPI.sendTextMessage(senderId, x[s]);
-                         }
-                        if(textInput.indexOf("thoi tiet")!=-1 || textInput.indexOf("thời tiết")!=-1){
-                            SendWeatherMessage(textInput, function(err, res) {
-                                if(err) {
-                                    console.log('weather api err:', err);
-                                    return;
-                                }
-                                var arr_mess = [];
-                                for(var i=0; i<res.messages.length; i++) {
-                                    arr_mess.push(res.messages[i].text);
-                                }
-                                console.log('arr mess:', arr_mess);
-                                sendMultiTextMessages(senderId, arr_mess)
-                                return;
-                            });                            
-                        }
-                        return fbAPI.sendTextMessage(senderId, output);
+                    if(textInput.indexOf("code") !=-1 || textInput.indexOf("Code") !=-1) {
+                        s = Math.floor((Math.random()*x.length)+1);
+                            return  fbAPI.sendTextMessage(senderId, x[s]);
                     }
+
+                    if (output instanceof Array) {
+                        console.log('vo day roi ne')
+                        sendMultiTextMessages(senderId, output);
+                    }
+                    // if(textInput.indexOf("thoi tiet")!=-1 || textInput.indexOf("thời tiết")!=-1){
+                    //     SendWeatherMessage(textInput, function(err, res) {
+                    //         if(err) {
+                    //             console.log('weather api err:', err);
+                    //             return;
+                    //         }
+                    //         var arr_mess = [];
+                    //         for(var i=0; i<res.messages.length; i++) {
+                    //             arr_mess.push(res.messages[i].text);
+                    //         }
+                    //         console.log('arr mess:', arr_mess);
+                    //         sendMultiTextMessages(senderId, arr_mess)
+                    //         return;
+                    //     });                            
+                    // }
+                    return fbAPI.sendTextMessage(senderId, output);
                     
                     
                    // fbAPI.sendTextMessage(senderId, output);

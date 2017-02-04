@@ -15,9 +15,14 @@ class ThoiTietAPI {
                     return;
                 }
                 
-                var data = JSON.parse(body);
-                var res = data.messages[0].text + '\n' + data.messages[1].text + '\n' + data.messages[2].text + data.messages[3].text+'\n'  + data.messages[4].text+ '\n' + data.messages[5].text +'\n' + data.messages[6].text;
-                resolve(res);            
+                var res = JSON.parse(body);
+                // var res = data.messages[0].text + '\n' + data.messages[1].text + '\n' + data.messages[2].text + data.messages[3].text+'\n'  + data.messages[4].text+ '\n' + data.messages[5].text +'\n' + data.messages[6].text;
+                
+                var data = [];
+                for (var i=0; i<res.messages.length; i++) {
+                    data.push(res.messages[i].text);
+                }
+                resolve(data);            
             });
         });
     }

@@ -11,10 +11,10 @@ class WeatherFilter extends SimpleFilter {
     }
 
     reply(input) {
-        return api.getthoitiet(this._query).then((videos) => {
+        return api.getthoitiet(this._query).then((data) => {
             return {
-                output: videos,
-                type: BOT_REPLY_TYPE.VIDEOS
+                output: data,
+                type: BOT_REPLY_TYPE.TEXT
             };
         });
     }
