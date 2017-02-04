@@ -154,7 +154,7 @@ var ChatbotDzFilter = new SimpleFilter (["Chatbot dep trai", "Chatbot đẹp tra
                 type: BUTTON_TYPE.POSTBACK,
                 payload: PAYLOAD.STOP
             }]);
-            var startFilter = new ButtonFilter(["Chat với bot", "bot đâu"],
+            var startFilter = new ButtonFilter(["Chat với bot", "bot đâu", "Get Started"],
         "Bấm vào nút nhé <3", [ {
                 title: "Chat với bot",
                 type: BUTTON_TYPE.POSTBACK,
