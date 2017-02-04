@@ -27,4 +27,4 @@ class WeatherFilter extends SimpleFilter {
 }
 
 
-module.exports = YoutubeFilter;
+module.exports = WeatherFilter;
