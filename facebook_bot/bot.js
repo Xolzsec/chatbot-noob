@@ -265,7 +265,7 @@ chat(input) {
                     this.reply(senderId, "stop");
                     break;
                     case PAYLOAD.START:
-                    this.reply(senderId, "start");
+                    this.reply(senderId, "hi");
                     break;
                 case PAYLOAD.SEE_CATEGORIES:
                     this.reply(senderId, "hello");
