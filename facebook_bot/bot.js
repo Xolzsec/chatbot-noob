@@ -148,13 +148,13 @@ var ChatbotDzFilter = new SimpleFilter (["Chatbot dep trai", "Chatbot đẹp tra
             "Bot là người nhân hậu, không chửi thề. Cút ngay không bố đập vỡ cmn ass bây giờ :v!");
         var testFilter = new SimpleFilter(["test"],
             "Đừng test nữa, mấy hôm nay người ta test nhiều quá bot mệt lắm rồi :'(");
-             var stopFilter = new ButtonFilter(["Chat với admin", "Admin đâu", "ad đâu"],
+             var stopFilter = new ButtonFilter(["Chat với admin", "Admin đâu", "ad đâu", "stop"],
         "Bấm vào nút nhé <3", [ {
                 title: "Chat với admin",
                 type: BUTTON_TYPE.POSTBACK,
                 payload: PAYLOAD.STOP
             }]);
-            var startFilter = new ButtonFilter(["Chat với bot", "bot đâu", "Get Started, start"],
+            var startFilter = new ButtonFilter(["Chat với bot", "bot đâu", "Get Started", "start"],
         "Bấm vào nút nhé <3", [ {
                 title: "Chat với bot",
                 type: BUTTON_TYPE.POSTBACK,
