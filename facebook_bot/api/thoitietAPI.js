@@ -5,7 +5,7 @@ class ThoiTietAPI {
 		this._url = "https://api.trolyfacebook.com/thoitiet/?noidung=";
 	}
     getthoitiet(query) {
-        console.log(this._url + encodeURI(query));
+        console.log('api:', _url + encodeURI(query));
         return new Promise((resolve, reject) => {
             request({
                 url: this._url + encodeURI(query),               
