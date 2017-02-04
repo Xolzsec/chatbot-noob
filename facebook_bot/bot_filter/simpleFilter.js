@@ -22,6 +22,7 @@ class SimpleFilter {
         });
     }
     reply(input) {
+        console.log('thay dong nay ko? SimpleFilter.js line 25');
         return new Promise((resolve, reject) => resolve({
             output: this._output,
             type: BOT_REPLY_TYPE.TEXT
