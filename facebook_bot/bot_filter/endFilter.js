@@ -19,12 +19,12 @@ class EndFilter {
         return true;
     }
     reply(input) {
-        // return simsimiAPI.getMessage(input).then(result => {
-        //     return {
-        //         output: result,
-        //         type: BOT_REPLY_TYPE.TEXT
-        //     };
-        // }, result => {
+        return simsimiAPI.getMessage(input).then(result => {
+            return {
+                output: result,
+                type: BOT_REPLY_TYPE.TEXT
+            };
+        }, result => {
             return {
                 output: "Xin lỗi bot còn nhỏ dại nên không hiểu. Bạn bấm \"Hướng dẫn\" hoặc gõ help xem?",
                 buttons: [{
@@ -34,7 +34,7 @@ class EndFilter {
                 }],
                 type: BOT_REPLY_TYPE.BUTTONS
             };
-        // });
+        });
     }
 }
 
