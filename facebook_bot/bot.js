@@ -224,11 +224,11 @@ var ChatbotDzFilter = new SimpleFilter (["Chatbot dep trai", "Chatbot đẹp tra
         this._goodbyeFilter = new SimpleFilter(["tạm biệt", "bye", "bai bai", "good bye"], "Tạm biệt, hẹn gặp lại ;)");
 		
 
-          this._filters = [new SpamFilter(),
-          youtubeFilter,
-            girlFilter, sexyGirlFilter, bikiniGirlFilter, javFilter, jav,
-			giubimatFilter, soloFilter, yeutaokFilter, startFilter, stopFilter,
-			ChatbotDzFilter, chuiLonFilter, thankyouFilter, helpFilter, thoitietFilter,
+          this._filters = [
+            new SpamFilter(), youtubeFilter, adInfoFilter, girlFilter, sexyGirlFilter, 
+            bikiniGirlFilter, javFilter, jav, yeunuocFilter, giubimatFilter, tienFilter, 
+            soloFilter, yeutaokFilter, startFilter, stopFilter,	ChatbotDzFilter, 
+            chuiLonFilter, thankyouFilter, helpFilter, thoitietFilter,
             this._goodbyeFilter, this._helloFilter, testFilter, new EndFilter(),
         ];
     }
