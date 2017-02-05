@@ -83,7 +83,7 @@ var s;
 class BotAsync {
     constructor() {
 
-        
+        this.endFilter = new EndFilter();
        var jav = new SimpleFilter(["jav", "nude"], "Bạn phải có code mới xem được ảnh JAV nhé <3 Để lấy code <3 Hãy share page và kiếm 10 like :v");
         this._helloFilter = new SimpleFilter(["hi", "halo", "hế lo", "hello", "chào", "xin chào"], "Chào bạn, mềnh là bot Măm <3 Bạn cần giúp gì nào ?");
         var girlFilter = new ImageFilter(["@gái", "@girl", "hình gái", "anh gai", "cute girl"], girlAPI.getRandomGirlImage.bind(girlAPI)); // From xkcn.info
@@ -183,7 +183,7 @@ chat(input) {
                 return filter.reply(input);
             }
         }
-        return new EndFilter().reply(input);
+        return this.endFilter.reply(input);
     }
 
     reply(senderId, textInput) {
