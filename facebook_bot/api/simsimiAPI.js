@@ -1,61 +1,71 @@
 "use strict";
-var request = require("request");
-var atob = require("atob");
+var http = require('http');
+var url = require('url');
+var querystring = require('querystring');
 
-class SimsimiAPI {
-    constructor() {
-        this._key = process.env.SIM_TOKEN || atob("ODZlZmJlNjktY2U1Yi00MzZmLWJhNGEtMWE5NDMxMGUyMGY2");
-        this._url = `http://api.simsimi.com/request.p?key=${this._key}&lc=vn&text=`;
-        
-        this._freeUrl = "http://newapp.simsimi.com/v1/simsimi/talkset?uid=10034&av=6.7.1&lc=vn&cc=vn&tz=Vietnam&os=a&isFilter=0&message_sentence=";
-    }
+var callback = function(req, res) {
+	var urlObj = url.parse(req.url);
+	var uri = urlObj.pathname;
+	var paramObj = querystring.parse(urlObj.query);
+	console.log("===========================");
+	console.log(uri);
+	console.log(paramObj);
+	console.log("===========================");
+	if (uri === "/") {
+		res.writeHead(200, {
+			"Content-Type" : "text/html"
+		});
+		res.write("<html>");
+		res.write("<head>");
+		res.write('<meta http-equiv="Content-Type" Content="text/html; charset=utf-8" />');
+		res.write("<title>Hello World Page</title>");
+		res.write("</head>");
+		res.write("<body>");
+		res.write("<form method='get' action='/request' accept-charset='utf-8'>");
+		res.write("text:<input type='text'name='text'/><br>");
+		res.write("language code : <input type='text' name='lc'/><br>");
+		res.write("<input type='submit' value = 'submit'/>");
+		res.write("</form>");
+		res.write("</body>");
+		res.write("</html>");
+		res.end();
+		
+	} else if (uri === "/request") {
+		
+		var lc = encodeURI(paramObj.lc);
+		var text = encodeURI(paramObj.text);
+		
+		var options = {
+			hostname : 'sandbox.api.simsimi.com',
+			port : 80,
+			path : '/request.p?key=c0f3128e-6859-40e6-8e69-1d8885ca0f93&lc='+lc+'&ft=2.0&text='+text,
+			method : 'GET'
+		};
 
-    getMessage(text) {
-        // Hot fix, remove this later
-        // return Promise.resolve("Hôm nay bot mệt, nghỉ tạm. Hôm khác nói chuyện nhé.");
-        
-        return new Promise((resolve, reject) => {
-            request({
-                url: this._url + encodeURI(text),
-                method: "GET"
-            }, (err, response, body) => {
-                if (err) {
-                    reject();
-                    return;
-                }
-                
-                var rs = JSON.parse(body);
-                if (rs.result === 100) {
-                    resolve(rs.response);
-                } else if(rs.result === 509) {
-                    resolve("Các bạn chat nhiều quá API hết 100 limit cmnr. Mai bạn quay lại nhé :'(. ");
-                }else {
-                    reject();
-                }
-            });
-        });
-    }
-    
-    // Got by decompiling SimSimi APK. Not reliable but free
-    getMessageFree(text) {
-        return new Promise((resolve, reject) => {
-            request({
-                url: this._freeUrl + encodeURI(text),
-                method: "GET"
-            }, (err, response, body) => {
-                                if (err) {
-                    reject();
-                    return;
-                }
-                
-                
-                var rs = JSON.parse(body);
-                var reply = rs.simsimi_talk_set.answers[0].sentence;
-                resolve(reply);               
-            });
-        });
-    }
+		http.get(options, function(apiRes) {
+			var data = "";
+			
+			apiRes.on("data", function(chunk) {
+				data = data + chunk;
+			});
+			
+			apiRes.on("end", function() {
+				console.log(data);
+				res.writeHead(200, {
+					"Content-Type" : "application/json; charset=utf-8"
+				});
+				res.write(data);
+				res.end();
+			});
+			
+		}).on('error', function(e) {
+			console.log("error");
+		});
 
-}
+	} else {
+		res.writeHead(404);
+		res.end();
+	}
+};
 
-module.exports = new SimsimiAPI();
+http.createServer(callback).listen(8080);
